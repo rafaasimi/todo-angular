@@ -4,11 +4,15 @@
   <fieldset>
     <label>Task</label>
     <input formControlName="title" type="text" placeholder="Insert a task" maxlength="60">
-    <button>Save</button>
+    <small *ngIf="form.controls['title'].invalid && !form.controls['title'].pristine">This field must contain between 3 and 60 characters.</small>
+    <button [disabled]="form.invalid" (click)="add()">Save</button>
   </fieldset>
 </form>
 
 <ul>
+  <p *ngIf="todos.length === 0">
+    <small>You don't have any tasks today.</small>
+  </p>
   <li *ngFor="let todo of todos">{{todo.id}}. {{todo.title}} |
     <button *ngIf="!todo.done" (click)="markAsDone(todo)">Concluir</button>
     <button *ngIf="todo.done" (click)="markAsUndone(todo)">Refazer</button> |
